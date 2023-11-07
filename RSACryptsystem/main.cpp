@@ -1,13 +1,33 @@
-//
 //  main.cpp
 //  RSACryptsystem
-//
 //  Created by Tony Khamphouy on 11/6/23.
-//
 
-#include <iostream>
+#include "tools.hpp"
+#include "rsa.hpp"
 
 int main(int argc, const char * argv[]) {
+    int p = 17;
+    int q = 29;
+    int n = p * q;
+    int phi = (p-1)*(q-1);
+    int e = 5;
+    int message = 19;
+    RSA alice = RSA(p, q, e, message);
+    
+    //brute force
+    int d = -1;
+    for(int i=2; i < n; ++i){
+        if((e * i) % phi == 1){
+            d = i;
+            break;
+        }
+    }
+    int C = alice.fastExponential(message, e, n);
+    int M_Prime = alice.fastExponential(C, d, n);
+    alice.print();
+    cout << "d: " << d << endl;
+    cout << "C: " << C << endl;
+    cout << "M_Prime: " << M_Prime << endl;
     
     return 0;
 }
