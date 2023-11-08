@@ -3,12 +3,15 @@
 //  Created by Tony Khamphouy on 11/7/23.
 
 #include "rsa.hpp"
+
+//Fast exponential function that in message, exponent and mod
+//to cypher and decypher
 int
 RSA::fastExponential(int m, int e, int mod){
     if(e == 0){
         return 1;
     }
-    else if(expo % 2 == 0){
+    else if(e % 2 == 0){
         int temp = fastExponential(m,e/2,mod);
         return (temp * temp) % mod;
     }
